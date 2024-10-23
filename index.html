@@ -11,11 +11,11 @@
 </head>
 
 <body class="flex flex-col min-h-screen bg-slate-200 dark:bg-slate-900 ">
-    <header class="relative flex justify-between items-center bg-slate-400 dark:bg-slate-800 text-white py-4 px-8">
-        <div class="w-[60%] flex gap-4">
+    <header class="flex justify-between items-center bg-slate-400 dark:bg-slate-800 text-white py-4 px-8">
+        <div class="inputSection h-full flex gap-4">
             <!-- Location Button with SVG -->
             <!-- w-10 h-10 text-slate-300 -->
-            <button id="locationBtn" class="hover:bg-blue-200 p-2 rounded-full mt-[11px]">
+            <button id="locationBtn" class="w-[15%] bg-slate-500 hover:bg-blue-200 p-2 rounded-full mt-[11px]">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
                     width="256" height="256" viewBox="0 0 256 256" xml:space="preserve"
                     class="w-10 h-10 text-slate-300">
@@ -50,13 +50,15 @@
                 </svg>
             </button>
             <!-- Input Fields for City, Latitude, Longitude -->
-            <div class="flex flex-col">
-                <label for="city" class="text-sm">Enter city</label>
+            <div class="cityInput w-[30%] h-full items-center flex flex-col">
+                <label for="city" class="text-sm w-full">Enter city</label>
                 <input id="cityName" type="text" placeholder="eg: London, New York, Delhi"
                     class="p-2 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-800">
             </div>
-            <div class="h-full w-full mt-auto">
-                <button id="searchCity" class="mb-4 rounded-md hover:bg-blue-200 p-[5px] mt-5">
+
+
+            <div class="h-full w-full flex justify-center items-center mt-1">
+                <button id="searchCity" class="mb-4 rounded-md hover:bg-blue-200 p-[5px] mt-5 bg-slate-300">
                     <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="48" height="48" viewBox="0 0 48 48"
                         class="h-8 w-8">
                         <path fill="#616161" d="M34.6 28.1H38.6V45.1H34.6z" transform="rotate(-45.001 36.586 36.587)">
@@ -71,54 +73,55 @@
                     </svg>
                 </button>
             </div>
-            <div class="flex flex-col">
+
+
+            <div class="latlon w-[30%] flex flex-col">
                 <label for="Latitude" class="text-sm">Latitude</label>
                 <input id="lat" type="number" placeholder="Enter lat"
                     class="p-2 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-950">
             </div>
-            <div class="flex flex-col">
+
+
+            <div class="latlon w-[30%] flex flex-col">
                 <label for="Longitude" class="text-sm">Longitude</label>
                 <input id="lon" type="number" placeholder="Enter Lon"
                     class="p-2 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-950">
             </div>
-            <div class="w-full h-full mt-auto">
-                <button id="latLonBtn" class="p-1 mb-[17px] rounded-md hover:bg-blue-200">
-                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="80" height="80" viewBox="0 0 80 80"
+
+
+            <div class="latlon w-full h-full flex justify-center items-center">
+                <button id="latLonBtn"
+                    class="h-10 w-10 flex justify-center items-center mt-3 rounded-md hover:bg-blue-200 bg-slate-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="48" height="48" viewBox="0 0 48 48"
                         class="h-8 w-8">
-                        <path fill="#b6c9d6"
-                            d="M6.998,77.5c-1.202,0-2.331-0.468-3.181-1.317c-1.753-1.753-1.753-4.607,0-6.36l36.828-35.11 l4.656,4.661L10.17,76.191C9.329,77.032,8.199,77.5,6.998,77.5z">
+                        <path fill="#616161" d="M34.6 28.1H38.6V45.1H34.6z" transform="rotate(-45.001 36.586 36.587)">
                         </path>
-                        <path fill="#788b9c"
-                            d="M40.636,35.411l3.966,3.97L9.825,75.829C9.069,76.584,8.066,77,6.998,77 c-1.068,0-2.072-0.416-2.827-1.171c-1.559-1.559-1.559-4.095-0.017-5.637L40.636,35.411 M40.654,34.013L3.464,69.469 c-1.952,1.952-1.951,5.116,0,7.068C4.44,77.512,5.719,78,6.998,78c1.279,0,2.558-0.488,3.534-1.464L46,39.366L40.654,34.013 L40.654,34.013z">
+                        <path fill="#616161" d="M20 4A16 16 0 1 0 20 36A16 16 0 1 0 20 4Z"></path>
+                        <path fill="#37474F" d="M36.2 32.1H40.2V44.400000000000006H36.2z"
+                            transform="rotate(-45.001 38.24 38.24)"></path>
+                        <path fill="#64B5F6" d="M20 7A13 13 0 1 0 20 33A13 13 0 1 0 20 7Z"></path>
+                        <path fill="#BBDEFB"
+                            d="M26.9,14.2c-1.7-2-4.2-3.2-6.9-3.2s-5.2,1.2-6.9,3.2c-0.4,0.4-0.3,1.1,0.1,1.4c0.4,0.4,1.1,0.3,1.4-0.1C16,13.9,17.9,13,20,13s4,0.9,5.4,2.5c0.2,0.2,0.5,0.4,0.8,0.4c0.2,0,0.5-0.1,0.6-0.2C27.2,15.3,27.2,14.6,26.9,14.2z">
                         </path>
-                        <g>
-                            <path fill="#d1edff"
-                                d="M52,53.5c-14.061,0-25.5-11.439-25.5-25.5S37.939,2.5,52,2.5S77.5,13.939,77.5,28 S66.061,53.5,52,53.5z">
-                            </path>
-                            <path fill="#788b9c"
-                                d="M52,3c13.785,0,25,11.215,25,25S65.785,53,52,53S27,41.785,27,28S38.215,3,52,3 M52,2 C37.641,2,26,13.641,26,28s11.641,26,26,26s26-11.641,26-26S66.359,2,52,2L52,2z">
-                            </path>
-                        </g>
                     </svg>
                 </button>
             </div>
         </div>
         <!-- Title Section -->
-        <div class="w-1/3 flex justify-center">
+        <div class="pageHeading w-[25%] h-full flex justify-center items-center">
             <h1 class="text-2xl font-bold w-full text-center">Weather Forecast</h1>
         </div>
         <!-- Theme Switch Button -->
-        <div class="w-1/3 flex flex-row-reverse">
-            <button class="darkModeBtn bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-full">Dark
-                Mode</button>
+        <div class="drkBtnSec w-[15%] h-full justify-center items-center flex flex-row-reverse">
+            <button class="darkModeBtn bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-full">Dark</button>
         </div>
     </header>
 
     <main class="w-[100%] h-[90vh] flex justify-center overflow-hidden">
         <p id="message" class="w-full absolute text-center mt-4"></p>
         <!-- Left Section (35%) -->
-        <div class="flex w-[100%]">
-            <section class="h-full w-[35%] py-20 px-10">
+        <div class="information flex w-[100%]">
+            <section class="dayOneSection h-full w-[35%] py-20 px-10">
                 <div id="todayInfo" class="w-full h-full flex flex-col gap-4">
                     <div class="placeInfo remove w-full h-20">
 
@@ -183,16 +186,69 @@
             </section>
 
             <!-- Right Section (65%) -->
-            <section class="h-full w-[65%] py-20 px-10">
+            <section class="otherDaySection h-full w-[65%] py-20 px-10">
                 <!-- Your content here -->
-                <div class="w-full h-full bg-slate-300 ">
+                <div id="remainFourDays" class="w-full h-full">
+                    <div id="dayTwoInfo" class="w-full h-[40%] bg-blue-400 rounded-lg flex justify-between">
+                        <div class="w-[30%] h-ful   l flex flex-col justify-between">
+                            <div class="remove iconDes w-full h-1/3 flex flex-col justify-center items-center">
 
+                            </div>
+                            <div class="w-full h-1/3 flex justify-between">
+                                <div class="remove hum w-1/2 h-full flex flex-col justify-center items-center">
+
+                                </div>
+                                <div class="remove temp w-1/2 h-full flex flex-col justify-center items-center">
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="w-1/3 h-full flex flex-col justify-between">
+                            <!-- <div class="remove day w-full h-1/3 flex justify-center items-center">
+
+                            </div> -->
+                            <div class="remove date w-full h-1/3 flex justify-center items-center">
+
+                            </div>
+                            <div class="w-full h-1/3 flex justify-between items-center">
+                                <div class="remove sunrise w-1/2 h-full flex flex-col justify-center items-center">
+
+                                </div>
+                                <div class="remove sunset w-1/2 h-full flex flex-col justify-center items-center">
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="w-1/3 h-full flex flex-col justify-between">
+                            <div class="remove deg w-full h-1/3 flex flex-col justify-center items-center">
+
+                            </div>
+                            <div class="w-full h-1/3 flex justify-between">
+                                <div class="remove wind w-1/2 h-full flex flex-col justify-center items-center">
+
+                                </div>
+                                <div class="remove gust w-1/2 h-full flex flex-col justify-center items-center">
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full h-[60%] bg-slate-300 flex justify-between rounded-lg">
+                        <div class="remainingThree w-[30%] h-full bg-blue-400 rounded-lg">
+
+                        </div>
+                        <div class="remainingThree w-1/3 h-full bg-blue-400 rounded-lg"></div>
+                        <div class="remainingThree w-1/3 h-full bg-blue-400 rounded-lg"></div>
+                    </div>
                 </div>
             </section>
         </div>
     </main>
 
-    <footer class="bg-slate-800 text-slate-300 w-full flex justify-center mt-auto">
+    <footer class="bg-slate-800 text-slate-300 flex justify-center mt-auto">
         <p class="text-center">&copy; Developed by Soumik Sinha
             <br>
             All rights reserved.

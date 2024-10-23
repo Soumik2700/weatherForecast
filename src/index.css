@@ -8,9 +8,6 @@
     font-weight: 800;
 }
 
-.placeName h2 {
-    color: bisque;
-}
 
 .placeInfo {
     display: flex;
@@ -26,7 +23,7 @@
     width: auto;
     height: 100%;
     text-align: center;
-    color: rgba(209, 211, 213, 0.9);
+    color: rgba(255, 255, 255, 0.9);
     display: flex;
     align-items: center;
 }
@@ -42,7 +39,188 @@
     border-radius: 15px;
 }
 
+#remainFourDays {
+    --tw-bg-opacity: 1;
+    background-color: rgb(203 213 225 / var(--tw-bg-opacity))
+        /* #cbd5e1 */
+    ;
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.dayTwo {
+    /* position: relative;
+    bottom: 4.5%; */
+    scale: 0.2;
+    transition: ease;
+}
+
+
 .remove {
     font-weight: 800;
     color: rgba(255, 255, 255, 0.8);
+}
+
+#latLonBtn,
+#searchCity {
+    transition: transform 0.3s ease;
+}
+
+#latLonBtn:hover {
+    transform: scale(1.06);
+}
+
+#searchCity:hover {
+    transform: scale(1.06);
+}
+
+@keyframes fadeInOne {
+    0% {
+        opacity: 0;
+        transform: translate(-20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(0);
+    }
+}
+
+.fade-in-one {
+    animation: fadeInOne 1s ease-in-out;
+}
+
+@keyframes fadeInTwo {
+    0% {
+        opacity: 0;
+        bottom: 15px;
+    }
+
+    100% {
+        opacity: 1;
+        bottom: 0;
+    }
+}
+
+.fade-in-two {
+    position: relative;
+    animation: fadeInTwo 1s ease-in-out;
+}
+
+@keyframes fadeInThree {
+    0% {
+        opacity: 0;
+        top: 15px;
+    }
+
+    100% {
+        opacity: 1;
+        top: 0;
+    }
+}
+
+.fade-in-three {
+    position: relative;
+    animation: fadeInThree ease-in-out 1s;
+}
+
+header {
+    width: 100%;
+    height: 100px;
+}
+
+
+.inputSection {
+    width: 50%;
+    height: 100%;
+}
+
+.upperDiv {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.lowerDiv {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    /* justify-content: space-between; */
+    /* align-items: center; */
+    /* padding: ; */
+}
+
+.tempDiv {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.humDiv {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@media(max-width: 1440px) {
+    header {
+        min-width: 100vh;
+    }
+
+    footer {
+        min-width: 100%;
+    }
+
+    .inputSection {
+        position: relative;
+        min-width: 100%;
+        height: 100%;
+        top: 100px;
+        z-index: 100;
+        /* background-color: aqua; */
+    }
+
+    .pageHeading {
+        width: 50%;
+        position: absolute;
+    }
+
+    .drkBtnSec {
+        width: 50%;
+        position: relative;
+        right: 250px;
+    }
+
+    .dayOneSection {
+        min-width: 70%;
+    }
+
+    .otherDaySection {
+        min-width: 100%;
+        min-height: 70%;
+    }
+
+    .information {
+        min-width: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow-y: auto;
+    }
+
+    body {
+        overflow: hidden;
+    }
 }
