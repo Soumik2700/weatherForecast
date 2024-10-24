@@ -390,10 +390,10 @@ function displayMaxMinTemp(filteredData) {
     // console.log(minTempVal, minTemp, humidityVal, humidity, maxTempVal, maxTemp);
 }
 
-function convertToCelsius(reading){
-    if(reading > 100){
+function convertToCelsius(reading) {
+    if (reading > 100) {
         return (reading - 273.15).toFixed(2);
-    }else{
+    } else {
         return reading.toFixed(2);
     }
 }
@@ -518,6 +518,10 @@ function remainingThreeDays(filteredData) {
         upperDiv.classList.add("upperDiv");
         part.appendChild(upperDiv);
 
+        const dateDiv = document.createElement("div");
+        dateDiv.classList.add("dateDiv");
+        part.appendChild(dateDiv);
+
         const lowerDiv = document.createElement("div");
         lowerDiv.classList.add("lowerDiv");
         part.appendChild(lowerDiv);
@@ -527,6 +531,11 @@ function remainingThreeDays(filteredData) {
         description.classList.add("font-bold", "text-slate-200");
         upperDiv.appendChild(image);
         upperDiv.appendChild(description);
+
+
+        const date = document.createElement("h2");
+        date.classList.add("text-sm", "font-bold", "text-slate-800");
+        dateDiv.appendChild(date);
 
 
         const tempDiv = document.createElement("div");
@@ -553,6 +562,8 @@ function remainingThreeDays(filteredData) {
 
         image.src = `https://openweathermap.org/img/wn/${filteredData.forecast[index].weather[0].icon}@2x.png`;
         description.innerHTML = filteredData.forecast[index].weather[0].description;
+
+        date.innerHTML = filteredData.forecast[index].dt_txt.substr(0, 10);
 
         tempVal.innerHTML = `${getCelsius(filteredData, index)}°C`;
         temp.innerHTML = "Temp";

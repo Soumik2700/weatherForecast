@@ -140,16 +140,24 @@ header {
 
 .upperDiv {
     width: 100%;
-    height: 50%;
+    height: 45%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
+.dateDiv {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .lowerDiv {
     width: 100%;
-    height: 50%;
+    height: 45%;
     display: flex;
     /* justify-content: space-between; */
     /* align-items: center; */
@@ -175,6 +183,10 @@ header {
 }
 
 @media(max-width: 1440px) {
+    body {
+        min-height: fit-content;
+    }
+
     header {
         min-width: 100vh;
     }
@@ -213,7 +225,7 @@ header {
     }
 
     .information {
-        min-width: auto;
+        min-width: fit-content;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -222,5 +234,25 @@ header {
 
     body {
         overflow: hidden;
+    }
+}
+
+@media (max-width: 360px) {
+    body {
+        min-width: fit-content;
+        min-height: max-content;
+    }
+
+    header {
+        min-width: fit-content;
+
+    }
+
+    main {
+        min-width: fit-content;
+    }
+
+    .information {
+        min-width: fit-content;
     }
 }
