@@ -182,77 +182,88 @@ header {
     align-items: center;
 }
 
-@media(max-width: 1440px) {
+@media(max-width: 768px) {
     body {
-        min-height: fit-content;
+
+        width: 860px;
+        min-height: 1200px;
+        overflow-y: auto;
     }
 
-    header {
-        min-width: 100vh;
-    }
-
-    footer {
-        min-width: 100%;
-    }
-
-    .inputSection {
-        position: relative;
-        min-width: 100%;
-        height: 100%;
-        top: 100px;
-        z-index: 100;
-        /* background-color: aqua; */
-    }
-
-    .pageHeading {
-        width: 50%;
-        position: absolute;
-    }
-
-    .drkBtnSec {
-        width: 50%;
-        position: relative;
-        right: 250px;
-    }
-
-    .dayOneSection {
-        min-width: 70%;
-    }
-
-    .otherDaySection {
-        min-width: 100%;
-        min-height: 70%;
-    }
-
+    /* main{
+        overflow-y: auto;
+    } */
     .information {
-        min-width: fit-content;
-        display: flex;
         flex-direction: column;
         align-items: center;
         overflow-y: auto;
     }
 
-    body {
-        overflow: hidden;
+    .dayOneSection {
+        width: 65%;
     }
-}
 
-@media (max-width: 360px) {
-    body {
-        min-width: fit-content;
-        min-height: max-content;
+    .otherDaySection {
+        width: 720px;
+        height: 400px;
+    }
+
+    #remainFourDays {
+        height: 450px;
     }
 
     header {
-        min-width: fit-content;
+        min-width: 100%;
+    }
 
+    footer {
+        min-width: 100%;
+        margin-top: auto;
+    }
+
+    .inputSection {
+        width: 80%;
+    }
+
+    .pageHeading {
+        display: none;
+    }
+
+    .drkBtnSec {
+        display: none;
+    }
+
+    .upperDiv {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .lowerDiv {
+        flex-direction: row;
+    }
+
+    .tempDiv,
+    .humDiv {
+        width: 100%;
+        align-items: center;
+    }
+}
+
+@media (max-width: 376px) {
+    body {
+        height: 1530px;
     }
 
     main {
-        min-width: fit-content;
+        min-height: 1100px;
     }
 
-    .information {
-        min-width: fit-content;
+    .todayInfo {
+        width: 550px;
+        height: auto;
+    }
+
+    footer {
+        height: 100px;
     }
 }

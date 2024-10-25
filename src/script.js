@@ -7,7 +7,7 @@ darkModeBtn.addEventListener("click", function () {
     const isDarkMode = htmlElement.classList.toggle("dark");
 
     // Update button text based on current mode
-    darkModeBtn.innerText = isDarkMode ? "Light Mode" : "Dark Mode";
+    darkModeBtn.innerText = isDarkMode ? "Light" : "Dark";
 });
 
 
@@ -16,18 +16,32 @@ const latLonBtn = document.getElementById("latLonBtn");
 const searchCityBtn = document.getElementById("searchCity");
 const todayInfo = document.getElementById("todayInfo");
 const dayTwoInfo = document.getElementById("dayTwoInfo");
+var message = document.getElementById("message");
+
 
 // console.log(searchCityBtn);
+
+
+
+let searchedCity = [];
+localStorage.setItem('searchedCity', JSON.stringify(searchedCity));
 
 searchCityBtn.addEventListener("click", getDataByCity);
 async function getDataByCity() {
 
-    const message = document.getElementById("message");
     message.innerHTML = "Wait for a while...";
     removeElements();
     try {
-        const city = document.getElementById("cityName").value;
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`)
+        const city = document.getElementById("cityName").value.trim();
+        // console.log(typeof(city));
+        const sortedArray = JSON.parse(localStorage.getItem("searchedCity"));
+
+        if(!sortedArray.includes(city)){
+            sortedArray.push(city);
+            localStorage.setItem("searchedCity", JSON.stringify(sortedArray));
+        }
+
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`);
         if (!response.ok) {
             throw new Error(`${response.status} - ${response.statusText}`);
         }
@@ -106,6 +120,7 @@ async function getDataByCity() {
 
     } catch (error) {
         console.error('Error fetching weather data:', error);
+        message.innerHTML = `Error fetching data: ${error}`;
     }
 }
 
@@ -534,7 +549,7 @@ function remainingThreeDays(filteredData) {
 
 
         const date = document.createElement("h2");
-        date.classList.add("text-sm", "font-bold", "text-slate-800");
+        date.classList.add("text-sm", "font-bold", "text-slate-600");
         dateDiv.appendChild(date);
 
 

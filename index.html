@@ -10,7 +10,8 @@
     <link rel="stylesheet" href="src/index.css">
 </head>
 
-<body class="flex flex-col bg-slate-200 dark:bg-slate-900">
+<body class="flex flex-col dark:bg-slate-900">
+
     <header class="flex justify-between items-center bg-slate-400 dark:bg-slate-800 text-white py-4 px-8">
         <div class="inputSection h-full flex gap-4">
             <!-- Location Button with SVG -->
@@ -54,6 +55,12 @@
                 <label for="city" class="text-sm w-full">Enter city</label>
                 <input id="cityName" type="text" placeholder="eg: London, New York, Delhi"
                     class="p-2 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-800">
+                <div id="searchHistory"
+                    class="absolute w-[200px] top-[80px] h-48 bg-slate-200 rounded-lg overflow-y-auto">
+                    <!-- Search history will be displayed here -->
+                </div>
+
+
             </div>
 
 
