@@ -30,6 +30,8 @@ searchCityBtn.addEventListener("click", getDataByCity);
 async function getDataByCity(cityName) {
 
     message.innerHTML = "Wait for a while...";
+    document.getElementById("lat").value = "";
+    document.getElementById("lon").value = "";
     removeElements();
     try {
         const city = document.getElementById("cityName").value.trim() || cityName;
@@ -148,7 +150,7 @@ function makeSearchHistory() {
 
         // console.log(city);
         const historyDiv = document.createElement("div");
-        historyDiv.classList.add("historyDiv","w-full", "h-10", "flex", "justify-around", "text-slate-600", "items-center", "hover:bg-slate-300");
+        historyDiv.classList.add("historyDiv", "w-full", "h-10", "flex", "justify-around", "text-slate-600", "items-center", "hover:bg-slate-300");
 
         const cityDiv = document.createElement("div");
         cityDiv.classList.add("cityDiv", "w-[100%]", "flex", "items-center", "h-full", "px-2");
@@ -156,7 +158,7 @@ function makeSearchHistory() {
         cityDiv.innerHTML = `<p class = "w-full h-full flex items-center">${city}</p>`;
 
         const deleteCity = document.createElement("div");
-        deleteCity.classList.add("deleteCity","w-[20%]", "flex", "justify-center", "items-center", "h-[70%]", "hover:bg-blue-300", "rounded-full");
+        deleteCity.classList.add("deleteCity", "w-[20%]", "flex", "justify-center", "items-center", "h-[70%]", "hover:bg-blue-300", "rounded-full");
         deleteCity.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 50 50" width="15px" height="15px"><path d="M 25 2 C 12.309534 2 2 12.309534 2 25 C 2 37.690466 12.309534 48 25 48 C 37.690466 48 48 37.690466 48 25 C 48 12.309534 37.690466 2 25 2 z M 25 4 C 36.609534 4 46 13.390466 46 25 C 46 36.609534 36.609534 46 25 46 C 13.390466 46 4 36.609534 4 25 C 4 13.390466 13.390466 4 25 4 z M 32.990234 15.986328 A 1.0001 1.0001 0 0 0 32.292969 16.292969 L 25 23.585938 L 17.707031 16.292969 A 1.0001 1.0001 0 0 0 16.990234 15.990234 A 1.0001 1.0001 0 0 0 16.292969 17.707031 L 23.585938 25 L 16.292969 32.292969 A 1.0001 1.0001 0 1 0 17.707031 33.707031 L 25 26.414062 L 32.292969 33.707031 A 1.0001 1.0001 0 1 0 33.707031 32.292969 L 26.414062 25 L 33.707031 17.707031 A 1.0001 1.0001 0 0 0 32.990234 15.986328 z"/></svg>`
 
         historyDiv.appendChild(cityDiv);
@@ -171,18 +173,19 @@ function makeSearchHistory() {
 
         cityDiv.addEventListener("click", function (event) {
             const city = event.target.textContent;
+            document.getElementById("cityName").value = city;
             getDataByCity(city);
             searchHistory.style.opacity = 0;
         })
 
         deleteCity.addEventListener("click", function (event) {
-            searchHistory.style.opacity = 1;
+            // searchHistory.style.opacity = 1;
 
             // Identify the target elements
             const deleteButton = event.target.closest(".deleteCity");
             const historyDiv = event.target.closest(".historyDiv");
             const city = historyDiv.querySelector(".cityDiv").textContent.trim();
-            console.log(deleteButton, historyDiv, city);
+            // console.log(deleteButton, historyDiv, city);
 
             // Retrieve and update the array in localStorage
             const array = JSON.parse(localStorage.getItem("searchedCity")) || [];
@@ -252,6 +255,8 @@ function getLocation() {
         // console.log(lat);
         // console.log(lon);
 
+        document.getElementById("lat").value = lat;
+        document.getElementById("lon").value = lon;
         fetchData(lat, lon);
         // locationButton.removeEventListener("click", getLocation);
     })
@@ -260,8 +265,16 @@ function getLocation() {
 async function fetchData(lat, lon) {
     const message = document.getElementById("message");
     message.innerHTML = "Wait for a while...";
+    document.getElementById("cityName").value = "";
     try {
         const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`);
+        if (!response.ok) {
+            throw new Error(`${response.status - response.statusText}`);
+        }
+        if (!lat || !lon) {
+            throw new Error("Please enter valid latitude and longitude!");
+
+        }
         const data = await response.json();
         message.innerHTML = "";
 
@@ -324,7 +337,7 @@ async function fetchData(lat, lon) {
             minTemp: minTemp
         };
 
-        console.log(filteredData);
+        // console.log(filteredData);
 
         // Continue processing the filtered data
         placeInfoElements(filteredData);
@@ -335,7 +348,8 @@ async function fetchData(lat, lon) {
         getAnimationOnDayTwo();
 
     } catch (error) {
-        console.error('Error fetching weather data:', error);
+        // console.error('Error fetching weather data:', error);
+        message.innerHTML = `Failed to fetch: ${error}`;
     }
 }
 
@@ -358,13 +372,13 @@ function placeInfoElements(filteredData) {
 
 
     const icon = filteredData.forecast[0].weather[0].icon
-    if(icon.endsWith('n')){
+    if (icon.endsWith('n')) {
         var iconCode = icon.slice(0, -1) + 'd';
-        console.log(iconCode);
-    }else{
+        // console.log(iconCode);
+    } else {
         iconCode = icon;
     }
-    
+
     weatherIcon.src = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
     // console.log(weatherIcon.src);
 
@@ -426,10 +440,10 @@ function displayRestOfDaysData(filteredData) {
 
     // `https://openweathermap.org/img/wn/${icon}@2x.png`
     const icon = filteredData.forecast[1].weather[0].icon;
-    if(icon.endsWith('n')){
+    if (icon.endsWith('n')) {
         var iconCode = icon.slice(0, -1) + 'd';
-        console.log(iconCode);
-    }else{
+        // console.log(iconCode);
+    } else {
         iconCode = icon;
     }
 
@@ -515,7 +529,7 @@ function convertToCelsius(reading) {
 
 function displayFeelsLikeTemp(filteredData) {
     const feelsLikeVal = document.getElementById("feelsLikeVal");
-    feelsLikeVal.innerHTML = `${filteredData.forecast[0].main.feels_like}°C`;
+    feelsLikeVal.innerHTML = `${convertToCelsius(filteredData.forecast[0].main.feels_like)}°C`;
     const feelsLike = document.getElementById("feelsLike");
     feelsLike.innerHTML = "Feels like";
 
@@ -676,10 +690,10 @@ function remainingThreeDays(filteredData) {
         humDiv.appendChild(hum);
 
         const icon = filteredData.forecast[index].weather[0].icon;
-        if(icon.endsWith('n')){
+        if (icon.endsWith('n')) {
             var iconCode = icon.slice(0, -1) + 'd';
-            console.log(iconCode);
-        }else{
+            // console.log(iconCode);
+        } else {
             iconCode = icon;
         }
 
