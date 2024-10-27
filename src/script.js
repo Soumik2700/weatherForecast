@@ -2,7 +2,7 @@
 const darkModeBtn = document.querySelector(".darkModeBtn");
 const htmlElement = document.getElementById("htmlSelector");
 
-// Function to toggle dark mode
+// Function toLowerCase() toggle dark mode
 darkModeBtn.addEventListener("click", function () {
     const isDarkMode = htmlElement.classList.toggle("dark");
 
@@ -23,36 +23,42 @@ var message = document.getElementById("message");
 
 
 
-let searchedCity = [];
+let searchedCity = JSON.parse(localStorage.getItem("searchedCity")) || [];
 localStorage.setItem('searchedCity', JSON.stringify(searchedCity));
 
 searchCityBtn.addEventListener("click", getDataByCity);
-async function getDataByCity() {
+async function getDataByCity(cityName) {
 
     message.innerHTML = "Wait for a while...";
     removeElements();
     try {
-        const city = document.getElementById("cityName").value.trim();
-        // console.log(typeof(city));
-        const sortedArray = JSON.parse(localStorage.getItem("searchedCity"));
+        const city = document.getElementById("cityName").value.trim() || cityName;
+        // console.log(city);
+        const sortedArray = JSON.parse(localStorage.getItem("searchedCity")) || [];
 
-        if(!sortedArray.includes(city)){
-            sortedArray.push(city);
-            localStorage.setItem("searchedCity", JSON.stringify(sortedArray));
+        if (typeof (city) != "object") {
+            if (!sortedArray.includes(city)) {
+                sortedArray.push(city);
+                localStorage.setItem("searchedCity", JSON.stringify(sortedArray));
+            }
         }
+
+        // const recentAddedCity = JSON.parse(localStorage.getItem("searchedCity"))[JSON.parse(localStorage.getItem("searchedCity")).length - 1];
+
+        // console.log(recentAddedCity);
 
         const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`);
         if (!response.ok) {
             throw new Error(`${response.status} - ${response.statusText}`);
         }
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         message.innerHTML = "";
         // console.log(data);
 
         const timezoneOffset = data.city.timezone;
 
-        // Initialize an empty array to store the forecast data for 5 days
+        // Initialize an empty array toLowerCase() store the forecast data for 5 days
         let fiveDayForecast = [];
         let daysIncluded = new Set();  // To track which days have been added
 
@@ -69,7 +75,7 @@ async function getDataByCity() {
             // Create a string representing the date (e.g., "2024-10-23")
             const dateString = `${localYear}-${localMonth + 1}-${localDate}`;
 
-            // Ensure we are within the time range (20:00 to 24:00 local time)
+            // Ensure we are within the time range (20:00 toLowerCase() 24:00 local time)
             if (localHours >= 20 && localHours <= 24) {
                 // Check if this day has already been included in the 5-day forecast
                 if (!daysIncluded.has(dateString)) {
@@ -108,7 +114,7 @@ async function getDataByCity() {
             minTemp: minTemp
         };
 
-        console.log(filteredData);
+        // console.log(filteredData);
 
         // Continue processing the filtered data
         placeInfoElements(filteredData);
@@ -123,6 +129,86 @@ async function getDataByCity() {
         message.innerHTML = `Error fetching data: ${error}`;
     }
 }
+const cityInput = document.getElementById("cityName");
+const searchHistory = document.getElementById("searchHistory");
+
+cityInput.addEventListener("click", function () {
+    makeSearchHistory();
+})
+
+function makeSearchHistory() {
+    searchHistory.style.opacity = 1;
+    // console.log(searchHistory);
+
+    searchHistory.innerHTML = "";
+    const existingCities = JSON.parse(localStorage.getItem("searchedCity")) || [];
+    const reversedCities = existingCities.reverse();
+
+    reversedCities.forEach(city => {
+
+        // console.log(city);
+        const historyDiv = document.createElement("div");
+        historyDiv.classList.add("historyDiv","w-full", "h-10", "flex", "justify-around", "text-slate-600", "items-center", "hover:bg-slate-300");
+
+        const cityDiv = document.createElement("div");
+        cityDiv.classList.add("cityDiv", "w-[100%]", "flex", "items-center", "h-full", "px-2");
+
+        cityDiv.innerHTML = `<p class = "w-full h-full flex items-center">${city}</p>`;
+
+        const deleteCity = document.createElement("div");
+        deleteCity.classList.add("deleteCity","w-[20%]", "flex", "justify-center", "items-center", "h-[70%]", "hover:bg-blue-300", "rounded-full");
+        deleteCity.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 50 50" width="15px" height="15px"><path d="M 25 2 C 12.309534 2 2 12.309534 2 25 C 2 37.690466 12.309534 48 25 48 C 37.690466 48 48 37.690466 48 25 C 48 12.309534 37.690466 2 25 2 z M 25 4 C 36.609534 4 46 13.390466 46 25 C 46 36.609534 36.609534 46 25 46 C 13.390466 46 4 36.609534 4 25 C 4 13.390466 13.390466 4 25 4 z M 32.990234 15.986328 A 1.0001 1.0001 0 0 0 32.292969 16.292969 L 25 23.585938 L 17.707031 16.292969 A 1.0001 1.0001 0 0 0 16.990234 15.990234 A 1.0001 1.0001 0 0 0 16.292969 17.707031 L 23.585938 25 L 16.292969 32.292969 A 1.0001 1.0001 0 1 0 17.707031 33.707031 L 25 26.414062 L 32.292969 33.707031 A 1.0001 1.0001 0 1 0 33.707031 32.292969 L 26.414062 25 L 33.707031 17.707031 A 1.0001 1.0001 0 0 0 32.990234 15.986328 z"/></svg>`
+
+        historyDiv.appendChild(cityDiv);
+        historyDiv.appendChild(deleteCity);
+
+        searchHistory.appendChild(historyDiv);
+
+        if (searchHistory.offsetHeight > 155) {
+            searchHistory.style.height = "155px";
+            searchHistory.style.overflowY = "auto";
+        }
+
+        cityDiv.addEventListener("click", function (event) {
+            const city = event.target.textContent;
+            getDataByCity(city);
+            searchHistory.style.opacity = 0;
+        })
+
+        deleteCity.addEventListener("click", function (event) {
+            searchHistory.style.opacity = 1;
+
+            // Identify the target elements
+            const deleteButton = event.target.closest(".deleteCity");
+            const historyDiv = event.target.closest(".historyDiv");
+            const city = historyDiv.querySelector(".cityDiv").textContent.trim();
+            console.log(deleteButton, historyDiv, city);
+
+            // Retrieve and update the array in localStorage
+            const array = JSON.parse(localStorage.getItem("searchedCity")) || [];
+            const index = array.indexOf(city);
+
+            if (index !== -1) {
+                array.splice(index, 1); // Remove the city from the array
+            }
+
+            // Remove the city display element from the DOM
+            historyDiv.remove();
+
+            // Update localStorage with the modified array
+            localStorage.setItem("searchedCity", JSON.stringify(array));
+        });
+
+    })
+    // console.log(searchHistory.offsetHeight);
+}
+
+document.addEventListener("click", function (event) {
+    // console.log(event.target);
+    if (!cityInput.contains(event.target) && !searchHistory.contains(event.target)) {
+        searchHistory.style.opacity = 0;
+    }
+})
 
 function getAnimationOnTodayInfo() {
     todayInfo.classList.remove("fade-in-one");
@@ -147,7 +233,7 @@ function getLatLon() {
     const lat = document.getElementById("lat").value;
     const lon = document.getElementById("lon").value;
 
-    // Log to make sure the values are correct
+    // Log toLowerCase() make sure the values are correct
     // console.log("Latitude:", lat);
     // console.log("Longitude:", lon);
 
@@ -182,7 +268,7 @@ async function fetchData(lat, lon) {
         // Get timezone offset from the city data (in seconds)
         const timezoneOffset = data.city.timezone;
 
-        // Initialize an empty array to store the forecast data for 5 days
+        // Initialize an empty array toLowerCase() store the forecast data for 5 days
         let fiveDayForecast = [];
         let daysIncluded = new Set();  // To track which days have been added
 
@@ -199,7 +285,7 @@ async function fetchData(lat, lon) {
             // Create a string representing the date (e.g., "2024-10-23")
             const dateString = `${localYear}-${localMonth + 1}-${localDate}`;
 
-            // Ensure we are within the time range (20:00 to 24:00 local time)
+            // Ensure we are within the time range (20:00 toLowerCase() 24:00 local time)
             if (localHours >= 20 && localHours <= 24) {
                 // Check if this day has already been included in the 5-day forecast
                 if (!daysIncluded.has(dateString)) {
@@ -272,13 +358,20 @@ function placeInfoElements(filteredData) {
 
 
     const icon = filteredData.forecast[0].weather[0].icon
-    weatherIcon.src = `https://openweathermap.org/img/wn/${icon}@2x.png`;
+    if(icon.endsWith('n')){
+        var iconCode = icon.slice(0, -1) + 'd';
+        console.log(iconCode);
+    }else{
+        iconCode = icon;
+    }
+    
+    weatherIcon.src = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
     // console.log(weatherIcon.src);
 
     placeName.innerHTML = filteredData.city.name;  // Use city name from data
     placeName.classList.add("placeName", "dark:text-white", "text-slate-200");
 
-    // Append to DOM
+    // Append toLowerCase() DOM
     placeInfo.appendChild(placeName);
     placeInfo.appendChild(descriptionHeading);
     placeInfo.appendChild(weatherIcon);
@@ -333,7 +426,14 @@ function displayRestOfDaysData(filteredData) {
 
     // `https://openweathermap.org/img/wn/${icon}@2x.png`
     const icon = filteredData.forecast[1].weather[0].icon;
-    const iconLink = `https://openweathermap.org/img/wn/${icon}@2x.png`;
+    if(icon.endsWith('n')){
+        var iconCode = icon.slice(0, -1) + 'd';
+        console.log(iconCode);
+    }else{
+        iconCode = icon;
+    }
+
+    const iconLink = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
     iconDes.innerHTML = `<img class="h-14 w-14 mt-3" src=${iconLink} alt="">
                         <h2 class = "font-bold text-slate-200">${filteredData.forecast[1].weather[0].description}</h2>`;
 
@@ -575,7 +675,16 @@ function remainingThreeDays(filteredData) {
         humDiv.appendChild(humVal);
         humDiv.appendChild(hum);
 
-        image.src = `https://openweathermap.org/img/wn/${filteredData.forecast[index].weather[0].icon}@2x.png`;
+        const icon = filteredData.forecast[index].weather[0].icon;
+        if(icon.endsWith('n')){
+            var iconCode = icon.slice(0, -1) + 'd';
+            console.log(iconCode);
+        }else{
+            iconCode = icon;
+        }
+
+
+        image.src = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
         description.innerHTML = filteredData.forecast[index].weather[0].description;
 
         date.innerHTML = filteredData.forecast[index].dt_txt.substr(0, 10);

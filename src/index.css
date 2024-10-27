@@ -181,6 +181,14 @@ header {
     justify-content: center;
     align-items: center;
 }
+/* body, main{
+    min-height: 100vh;
+} */
+@media(min-width: 769px) and (max-width: 1420px) {
+    .pageHeading {
+        display: none;
+    }
+}
 
 @media(max-width: 768px) {
     body {
@@ -250,8 +258,12 @@ header {
 }
 
 @media (max-width: 376px) {
+
+    /* html{
+        height: 1550px;
+    } */
     body {
-        height: 1530px;
+        height: 1550px;
     }
 
     main {
@@ -266,4 +278,8 @@ header {
     footer {
         height: 100px;
     }
+}
+
+#searchHistory {
+    opacity: 0;
 }

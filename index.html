@@ -53,16 +53,14 @@
             <!-- Input Fields for City, Latitude, Longitude -->
             <div class="cityInput w-[30%] h-full items-center flex flex-col">
                 <label for="city" class="text-sm w-full">Enter city</label>
-                <input id="cityName" type="text" placeholder="eg: London, New York, Delhi"
+                <input id="cityName" type="text" autocomplete="off" placeholder="eg: London, New York, Delhi"
                     class="p-2 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-800">
                 <div id="searchHistory"
-                    class="absolute w-[200px] top-[80px] h-48 bg-slate-200 rounded-lg overflow-y-auto">
+                    class="absolute w-[200px] top-[80px] bg-slate-200 rounded-lg overflow-y-auto">
                     <!-- Search history will be displayed here -->
                 </div>
 
-
             </div>
-
 
             <div class="h-full w-full flex justify-center items-center mt-1">
                 <button id="searchCity" class="mb-4 rounded-md hover:bg-blue-200 p-[5px] mt-5 bg-slate-300">
