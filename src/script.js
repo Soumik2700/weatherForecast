@@ -34,7 +34,24 @@ async function getDataByCity(cityName) {
     document.getElementById("lon").value = "";
     removeElements();
     try {
-        const city = document.getElementById("cityName").value.trim() || cityName;
+        const cityInput = document.getElementById("cityName");
+        const city = cityInput.value.trim() || cityName;
+
+        const invalidPattern = /[^a-zA-Z\s]/;
+
+        if (!city) {
+            alert("Please enter a city name.");
+            cityInput.focus();
+            message.innerHTML = "";
+            return;
+        } else if (invalidPattern.test(city)) {
+            alert("City name should only contain letters and spaces.");
+            cityInput.focus();
+            message.innerHTML = "";
+            return;
+        }
+
+
         // console.log(city);
         const sortedArray = JSON.parse(localStorage.getItem("searchedCity")) || [];
 
@@ -232,17 +249,32 @@ function getAnimationOnDayTwo() {
 latLonBtn.addEventListener("click", getLatLon);
 
 function getLatLon() {
-    // Get latitude and longitude values inside the function after the button is clicked
-    const lat = document.getElementById("lat").value;
-    const lon = document.getElementById("lon").value;
+    // Get latitude and longitude values
+    const lat = document.getElementById("lat").value.trim();
+    const lon = document.getElementById("lon").value.trim();
 
-    // Log toLowerCase() make sure the values are correct
-    // console.log("Latitude:", lat);
-    // console.log("Longitude:", lon);
+    // Validate latitude and longitude
+    if (!lat || !lon) {
+        alert("Please enter both latitude and longitude.");
+        return;
+    }
 
-    // Fetch the weather data using the coordinates
-    fetchData(lat, lon);
-    // latLonBtn.removeEventListener("click", getLatLon);
+    // Check if lat and lon are valid numbers within the appropriate range
+    const latNum = parseFloat(lat);
+    const lonNum = parseFloat(lon);
+
+    if (isNaN(latNum) || latNum < -90 || latNum > 90) {
+        alert("Latitude must be a number between -90 and 90.");
+        return;
+    }
+
+    if (isNaN(lonNum) || lonNum < -180 || lonNum > 180) {
+        alert("Longitude must be a number between -180 and 180.");
+        return;
+    }
+
+    // If valid, fetch the weather data
+    fetchData(latNum, lonNum);
 }
 
 const locationButton = document.getElementById("locationBtn");
